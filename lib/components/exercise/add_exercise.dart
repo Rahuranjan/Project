@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:project/components/exercise/primary_muscle.dart';
 
-class AddExercise extends StatelessWidget {
-  const AddExercise({super.key});
+class AddExercise extends StatefulWidget {
+  final String? temp;
+  const AddExercise({super.key, this.temp});
 
+  @override
+  State<AddExercise> createState() => _AddExerciseState();
+}
+
+class _AddExerciseState extends State<AddExercise> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,12 +55,17 @@ class AddExercise extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Abs",
-                    style: TextStyle(color: Colors.white),
+                   Text(
+                    widget.temp == null ? "sales": '${widget.temp}',
+                    style:const TextStyle(color: Colors.white),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PrimaryMuscle()));
+                      },
                       icon: const Icon(
                         Icons.arrow_forward_ios,
                         color: Colors.white,

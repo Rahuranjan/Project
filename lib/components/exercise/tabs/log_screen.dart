@@ -1,4 +1,4 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LogScreen extends StatefulWidget {
@@ -170,11 +170,11 @@ class _LogScreenState extends State<LogScreen> {
                 height: 50,
                 child: TextButton(
                     onPressed: () {
-                      // Map<String, dynamic> data = {
-                      //   "field1": _count,
-                      //   "field2": _weightCount
-                      // };
-                      // FirebaseFirestore.instance.collection("users").add(data);
+                      Map<String, dynamic> data = {
+                        "field1": _count,
+                        "field2": _weightCount
+                      };
+                      FirebaseFirestore.instance.collection("users").add(data);
                       if(_count!=0 && _weightCount!=0){
                         setState(() {
                           sets.add(Set(reps: _count, weights: _weightCount));
@@ -190,7 +190,7 @@ class _LogScreenState extends State<LogScreen> {
                           fontSize: 20),
                     ))),
               ),
-              const Column(
+               const Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

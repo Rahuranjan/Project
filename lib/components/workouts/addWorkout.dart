@@ -115,7 +115,7 @@ class _AddWorkoutState extends State<AddWorkout> {
                         leading: Checkbox(
                             checkColor: Colors.yellow,
                             activeColor: Colors.black,
-                            value: selectedDays.contains(workoutDays[index]),
+                            value: selectedDays.contains(workoutDays[index]), 
                             onChanged: (value) {
                               setState(() {
                                 if (value!) {

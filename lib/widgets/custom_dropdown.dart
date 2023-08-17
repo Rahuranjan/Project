@@ -52,7 +52,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
       );
     }
     return ExpansionTile(
-      // leading: Icon(list.icon),
       title: Text(
         list.name,
         style: const TextStyle(color: Colors.white),
