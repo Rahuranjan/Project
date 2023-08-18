@@ -172,12 +172,13 @@ class _LogScreenState extends State<LogScreen> {
                     onPressed: () {
                       Map<String, dynamic> data = {
                         "field1": _count,
-                        "field2": _weightCount
+                        "field2": _weightCount,
+                        "field3": Timestamp.now()
                       };
                       FirebaseFirestore.instance.collection("users").add(data);
                       if(_count!=0 && _weightCount!=0){
                         setState(() {
-                          sets.add(Set(reps: _count, weights: _weightCount));
+                          sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
                         });
                       }
                     },
@@ -190,41 +191,39 @@ class _LogScreenState extends State<LogScreen> {
                           fontSize: 20),
                     ))),
               ),
-               const Column(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                const  SizedBox(
                     height: 15,
                   ),
-                  Text(
+                 const Text(
                     "Today's Session",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
                         fontSize: 20),
                   ),
-                  // Expanded(
-                  //   child: ListView.builder(
-                  //     shrinkWrap: true,
-                  //     physics:const ClampingScrollPhysics(),
-                  //       itemCount: sets.length,
-                  //       itemBuilder: (context, index) => getList(index)),
-                  // ),
-                  SizedBox(
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics:const ClampingScrollPhysics(),
+                      itemCount: sets.length,
+                      itemBuilder: (context, index) => getList(index)),
+                  const SizedBox(
                     height: 15,
                   ),
-                  Text(
+                  const Text(
                     "Previous Session",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
                         fontSize: 20),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  Text(
+                  const Text(
                     "View History",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -246,11 +245,11 @@ class _LogScreenState extends State<LogScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Reps: $sets[index].reps",
+            "Reps: ${sets[index].reps}",
             style: TextStyle(color: Colors.grey.shade400),
           ),
           Text(
-            "Weights:$sets[index].weights kg",
+            "Weights:${sets[index].weights} kg",
             style: TextStyle(color: Colors.grey.shade400),
           ),
           Text(
@@ -266,5 +265,6 @@ class _LogScreenState extends State<LogScreen> {
 class Set {
   int reps;
   double weights;
-  Set({required this.reps, required this.weights});
+  Timestamp currentTime;
+  Set({required this.reps, required this.weights, required this.currentTime});
 }

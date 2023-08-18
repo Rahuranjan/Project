@@ -68,12 +68,15 @@ class _AddWorkoutState extends State<AddWorkout> {
             TextField(
               keyboardType: TextInputType.text,
               controller: name,
-              decoration: InputDecoration(
-                  hintText: "Workout Name",
-                  fillColor: Colors.grey.shade400,
-                  filled: true,
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade900))),
+              decoration: const InputDecoration(
+                hintText: "Workout Name",
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                fillColor: Color.fromRGBO(189, 189, 189, 1),
+                filled: true,
+              ),
               cursorColor: Colors.grey,
             ),
             const SizedBox(
@@ -86,15 +89,19 @@ class _AddWorkoutState extends State<AddWorkout> {
                   hintText: "Description (Optional)",
                   fillColor: Colors.grey.shade400,
                   filled: true,
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade900))),
+                  enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black))),
               // cursorColor: Colors.grey,
             ),
             const SizedBox(
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 10,),
+              padding: const EdgeInsets.only(
+                left: 10,
+              ),
               child: Text(
                 "Select Workout Days",
                 style: TextStyle(color: Colors.grey.shade400, fontSize: 18),
@@ -115,7 +122,7 @@ class _AddWorkoutState extends State<AddWorkout> {
                         leading: Checkbox(
                             checkColor: Colors.yellow,
                             activeColor: Colors.black,
-                            value: selectedDays.contains(workoutDays[index]), 
+                            value: selectedDays.contains(workoutDays[index]),
                             onChanged: (value) {
                               setState(() {
                                 if (value!) {

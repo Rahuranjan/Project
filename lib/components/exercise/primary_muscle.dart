@@ -19,8 +19,7 @@ class _PrimaryMuscleState extends State<PrimaryMuscle> {
     super.initState();
     for (var element in datalist) {
       data.add(Menu.fromJson(element));
-    } 
-
+    }
   }
 
   @override
@@ -43,11 +42,14 @@ class _PrimaryMuscleState extends State<PrimaryMuscle> {
               child: ListTile(
                 onTap: () {
                   setState(() {
-                    
                     if (data[index].name != temp) {
                       temp = data[index].name;
                     }
                   });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddExercise(temp: temp)));
                   // Navigator.of(context).pop();
                   print(temp);
                   // print(selectedExercise);
@@ -56,16 +58,15 @@ class _PrimaryMuscleState extends State<PrimaryMuscle> {
                   data[index].name,
                   style: const TextStyle(color: Colors.white),
                 ),
-                trailing: temp == data[index].name ? const Icon(Icons.check, color: Colors.yellow,) : null ,
+                trailing: temp == data[index].name
+                    ? const Icon(
+                        Icons.check,
+                        color: Colors.yellow,
+                      )
+                    : null,
               ),
             );
           }),
-          floatingActionButton: FloatingActionButton(
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AddExercise(temp: temp)));
-            },
-            child:const Icon(Icons.arrow_forward_ios),
-            ),
     );
   }
 }
