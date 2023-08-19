@@ -5,6 +5,7 @@ import 'package:project/components/exercise/tabs/my_stats.dart';
 
 class Log extends StatefulWidget {
   final String title;
+
   const Log({super.key, required this.title});
 
   @override
@@ -12,15 +13,18 @@ class Log extends StatefulWidget {
 }
 
 class _LogState extends State<Log> {
-  bool isChecked = false;
+  bool isChecked1 = false;
+  bool isChecked2 = false;
+  bool isChecked3 = false;
+  bool isChecked4 = false;
 
-  void _showDialog(BuildContext context) {
+  void _showDialog(BuildContext buildContext) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
+        context: buildContext,
+        builder: (buildContext) {
           return Dialog(
             child: Container(
-              height: 325,
+              height: 340,
               decoration: BoxDecoration(
                   color: Colors.grey.shade900,
                   borderRadius: BorderRadius.circular(0)),
@@ -40,10 +44,10 @@ class _LogState extends State<Log> {
                         "Vibrate when complete",
                         style: TextStyle(color: Colors.white),
                       ),
-                      value: isChecked,
+                      value: isChecked1,
                       onChanged: (val) {
                         setState(() {
-                          isChecked = val!;
+                          isChecked1 = val!;
                         });
                       },
                     ),
@@ -52,10 +56,10 @@ class _LogState extends State<Log> {
                         "Beep when complete",
                         style: TextStyle(color: Colors.white),
                       ),
-                      value: isChecked,
+                      value: isChecked2,
                       onChanged: (val) {
                         setState(() {
-                          isChecked = val!;
+                          isChecked2 = val!;
                         });
                       },
                     ),
@@ -64,10 +68,10 @@ class _LogState extends State<Log> {
                         "Stopwatch mode",
                         style: TextStyle(color: Colors.white),
                       ),
-                      value: isChecked,
+                      value: isChecked3,
                       onChanged: (val) {
                         setState(() {
-                          isChecked = val!;
+                          isChecked3 = val!;
                         });
                       },
                     ),
@@ -77,10 +81,10 @@ class _LogState extends State<Log> {
                         style: TextStyle(color: Colors.white),
                       ),
                       tileColor: Colors.white,
-                      value: isChecked,
+                      value: isChecked4,
                       onChanged: (val) {
                         setState(() {
-                          isChecked = val!;
+                          isChecked4 = val!;
                         });
                       },
                     ),
@@ -208,13 +212,13 @@ class _LogState extends State<Log> {
     );
   }
 
-  Widget tickMark(BuildContext context) {
-    return CheckboxListTile(
-        value: isChecked,
-        onChanged: (newValue) {
-          setState(() {
-            isChecked = newValue!;
-          });
-        });
-  }
+  // Widget tickMark(BuildContext context) {
+  //   return CheckboxListTile(
+  //       value: isChecked,
+  //       onChanged: (newValue) {
+  //         setState(() {
+  //           isChecked = newValue!;
+  //         });
+  //       });
+  // }
 }

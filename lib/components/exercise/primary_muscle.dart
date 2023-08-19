@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/exercise/add_exercise.dart';
+import 'package:project/components/exercise/tempdata.dart';
 
 import '../../data/dataModel.dart';
 
@@ -11,8 +12,8 @@ class PrimaryMuscle extends StatefulWidget {
 }
 
 class _PrimaryMuscleState extends State<PrimaryMuscle> {
-  List<Menu> data = [];
   String temp = "sales";
+  List<Menu> data = [];
 
   @override
   void initState() {
@@ -44,13 +45,20 @@ class _PrimaryMuscleState extends State<PrimaryMuscle> {
                   setState(() {
                     if (data[index].name != temp) {
                       temp = data[index].name;
+                      TempData().updateString(data[index].name);
                     }
                   });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddExercise(temp: temp)));
-                  // Navigator.of(context).pop();
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => AddExercise(temp: temp)));
+
+                  // Navigator.pushAndRemoveUntil(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => AddExercise(temp: temp)),
+                  //     (route) => false);
+                  Navigator.of(context).pop();
                   print(temp);
                   // print(selectedExercise);
                 },

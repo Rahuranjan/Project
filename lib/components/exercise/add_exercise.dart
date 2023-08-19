@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/exercise/primary_muscle.dart';
+import 'package:project/components/exercise/tempdata.dart';
 
 class AddExercise extends StatefulWidget {
-  final String? temp;
-  const AddExercise({super.key, this.temp});
+  // final String? temp;
+  const AddExercise({
+    super.key,
+    // this.temp,
+  });
 
   @override
   State<AddExercise> createState() => _AddExerciseState();
 }
 
 class _AddExerciseState extends State<AddExercise> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +58,9 @@ class _AddExerciseState extends State<AddExercise> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Text(
-                    widget.temp == null ? "sales": '${widget.temp}',
-                    style:const TextStyle(color: Colors.white),
+                  Text(
+                    TempData().data == null ? "sales" : TempData().data!,
+                    style: const TextStyle(color: Colors.white),
                   ),
                   IconButton(
                       onPressed: () {
