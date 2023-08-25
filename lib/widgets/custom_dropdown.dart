@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/exercise/log.dart';
 
-import '../data/dataModel.dart';
+import 'package:project/data/data_model.dart';
+
 
 class CustomDropdown extends StatefulWidget {
   const CustomDropdown({super.key});

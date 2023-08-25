@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/components/workouts/provider_workoutdays.dart';
+import 'package:provider/provider.dart';
 
 class AddWorkout extends StatefulWidget {
   const AddWorkout({super.key});
@@ -9,8 +11,6 @@ class AddWorkout extends StatefulWidget {
 
 class _AddWorkoutState extends State<AddWorkout> {
   final TextEditingController name = TextEditingController();
-
-  List<String> selectedDays = [];
 
   List<String> workoutDays = [
     'Monday',
@@ -93,7 +93,6 @@ class _AddWorkoutState extends State<AddWorkout> {
                       borderSide: BorderSide(color: Colors.black)),
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black))),
-              // cursorColor: Colors.grey,
             ),
             const SizedBox(
               height: 20,
@@ -114,24 +113,27 @@ class _AddWorkoutState extends State<AddWorkout> {
                 child: ListView.builder(
                     itemCount: workoutDays.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          workoutDays[index],
-                          style: const TextStyle(color: Colors.white),
+                      return Consumer<WorkoutDaysProvider>(
+                        builder: (context, value, child) => ListTile(
+                          onTap: () {
+                            if (value.selectedDays.contains(index.toString())) {
+                              value.removeDays(index.toString());
+                            } else {
+                              value.addDays(index.toString());
+                            }
+                            print(value.selectedDays);
+                          },
+                          title: Text(
+                            workoutDays[index],
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          trailing: Icon(
+                            value.selectedDays.contains(index.toString())
+                                ? Icons.check
+                                : null,
+                            color: Colors.yellow,
+                          ),
                         ),
-                        leading: Checkbox(
-                            checkColor: Colors.yellow,
-                            activeColor: Colors.black,
-                            value: selectedDays.contains(workoutDays[index]),
-                            onChanged: (value) {
-                              setState(() {
-                                if (value!) {
-                                  selectedDays.add(workoutDays[index]);
-                                } else {
-                                  selectedDays.remove(workoutDays[index]);
-                                }
-                              });
-                            }),
                       );
                     })),
           ],

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/exercise/tabs/show_data.dart';
-// import 'package:project/screen/profile.dart';
+import 'package:project/screen/profile.dart';
 import 'package:project/screen/workouts.dart';
 import 'package:project/screen/calendar_screen.dart';
 import 'package:project/screen/exercises.dart';
-import 'package:project/screen/login_screen.dart';
-// import 'package:project/screen/signup_screen.dart';
-// import 'package:project/screen/youtube_link.dart';
+
 
 
 class ScreenLayout extends StatefulWidget {
@@ -24,7 +22,7 @@ class _ScreenLayoutState extends State<ScreenLayout> {
     const ExerciseScreen(),
     const CalendarScreen(),
     const ShowData(),
-    const LoginPage(),
+    const Profile(),
   ];
 
   

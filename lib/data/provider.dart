@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:project/data/dataModel.dart';
+import 'package:project/data/data_model.dart';
 
 class PrimaryMuscleProvider extends ChangeNotifier {
   String temp = "sales";

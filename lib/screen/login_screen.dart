@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/resources/auth_method.dart';
+import 'package:project/screen/screen_layout.dart';
 import 'package:project/widgets/my_textfield.dart';
 import 'package:project/screen/signup_screen.dart';
 
@@ -14,30 +15,41 @@ class _LoginPageState extends State<LoginPage> {
   //text editing contrillers
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passswordController = TextEditingController();
+  bool _isLoading = false;
 
   void signUserIn() async {
-    // show loading circle
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        });
-    // try sign in
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, 
-          password: passswordController.text);
+    setState(() {
+      _isLoading = true;
+    });
 
-      // pop the loading circle
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      //pop the loading circle
-      Navigator.pop(context);
-      //show error message
-      showErrorMessage(e.code);
+    // try sign in
+    // try {
+    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+    //       email: emailController.text,
+    //       password: passswordController.text);
+
+    //   // pop the loading circle
+    //   Navigator.pop(context);
+    // } on FirebaseAuthException catch (e) {
+    //   //pop the loading circle
+    //   Navigator.pop(context);
+    //   //show error message
+    //   showErrorMessage(e.code);
+    // }
+    String res = await AuthMethods().loginUser(
+        email: emailController.text, password: passswordController.text);
+
+    if (res == "success") {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const ScreenLayout()));
+      
+    } else {
+      showErrorMessage(res);
+      
     }
+    setState(() {
+        _isLoading = false;
+      });
   }
 
   //error message to user
@@ -50,9 +62,7 @@ class _LoginPageState extends State<LoginPage> {
             title: Center(
               child: Text(
                 message,
-                style: const TextStyle(
-                  color: Colors.white
-                ),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           );
@@ -82,10 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Text(
                   'Welcome back',
-                  style: TextStyle(
-                    color: Colors.grey.shade600, 
-                    fontSize: 16
-                  ),
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 16),
                 ),
                 const SizedBox(
                   height: 25,
@@ -97,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: false,
                   textInputType: TextInputType.emailAddress,
                 ),
-                
+
                 const SizedBox(
                   height: 10,
                 ),
@@ -115,9 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         'Forgot Password?',
-                        style: TextStyle(
-                          color: Colors.grey.shade500
-                        ),
+                        style: TextStyle(color: Colors.grey.shade500),
                       )
                     ],
                   ),
@@ -135,15 +140,19 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(8)),
-                    child: const Center(
-                      child: Text(
-                        "Sign In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    ),
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : const Center(
+                            child: Text(
+                              "Sign In",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          ),
                   ),
                 ),
 
@@ -165,9 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           'Or continue with',
-                          style: TextStyle(
-                            color: Colors.grey.shade700
-                          ),
+                          style: TextStyle(color: Colors.grey.shade700),
                         ),
                       ),
                       Expanded(
@@ -178,7 +185,9 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(
+                  height: 15,
+                ),
 
                 //google + phone sign in buttons
 
@@ -198,7 +207,9 @@ class _LoginPageState extends State<LoginPage> {
                         height: 40,
                       ),
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     // phone button
                     Container(
                       padding: const EdgeInsets.all(15),
@@ -214,7 +225,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-
 
                 const SizedBox(
                   height: 75,
@@ -232,9 +242,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, 
-                        MaterialPageRoute(builder: (context) => const SignUpScreen())
-                        );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpScreen()));
                       },
                       child: const Text(
                         "Register now",

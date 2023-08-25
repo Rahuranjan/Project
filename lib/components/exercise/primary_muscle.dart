@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project/components/exercise/add_exercise.dart';
 import 'package:project/components/exercise/tempdata.dart';
+import 'package:provider/provider.dart';
 
-import '../../data/dataModel.dart';
+import '../../data/data_model.dart';
 
 class PrimaryMuscle extends StatefulWidget {
   const PrimaryMuscle({super.key});
@@ -37,30 +37,19 @@ class _PrimaryMuscleState extends State<PrimaryMuscle> {
       body: ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) {
-            return Container(
+            return Consumer<TempData>(
+              builder:(context, tempdata, child) => 
+              Container(
               color: Colors.black,
               padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
               child: ListTile(
                 onTap: () {
-                  setState(() {
                     if (data[index].name != temp) {
                       temp = data[index].name;
-                      TempData().updateString(data[index].name);
+                      tempdata.updateString(data[index].name);
                     }
-                  });
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => AddExercise(temp: temp)));
-
-                  // Navigator.pushAndRemoveUntil(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => AddExercise(temp: temp)),
-                  //     (route) => false);
                   Navigator.of(context).pop();
                   print(temp);
-                  // print(selectedExercise);
                 },
                 title: Text(
                   data[index].name,
@@ -73,7 +62,7 @@ class _PrimaryMuscleState extends State<PrimaryMuscle> {
                       )
                     : null,
               ),
-            );
+            ));
           }),
     );
   }

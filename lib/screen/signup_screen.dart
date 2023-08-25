@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project/screen/login_screen.dart';
+import 'package:project/screen/screen_layout.dart';
 import 'package:project/widgets/my_textfield.dart';
 import 'package:project/resources/auth_method.dart';
-import 'package:project/screen/auth_page.dart';
 import 'package:project/screen/login_with_phone.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController passswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  bool isLoading = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -26,20 +27,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
     passswordController.dispose();
     confirmPasswordController.dispose();
   }
-
+ 
   void signUpUser() async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
     String res = await AuthMethods().signUpUser(
         email: emailController.text, password: passswordController.text);
 
-    setState(() {
-      isLoading = false;
-    });
-    if (res != 'success') {
-      showSnackBar(res, context);
+
+    if (res == "success") {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const ScreenLayout()));
+      
+    } else {
+      showErrorMessage(res);
+      
     }
+    setState(() {
+        _isLoading = false;
+      });
   }
 
   //error message to user
@@ -127,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(8)),
-                    child: isLoading
+                    child: _isLoading
                         ? const Center(
                             child: CircularProgressIndicator(
                               color: Colors.yellow,
@@ -239,10 +246,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AuthPage()));
+                        Navigator.push(context, 
+                        MaterialPageRoute(builder: (context) => const LoginPage())
+                        );
+                        
                       },
                       child: const Text(
                         "Login Now",

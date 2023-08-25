@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/exercise/primary_muscle.dart';
 import 'package:project/components/exercise/tempdata.dart';
+import 'package:provider/provider.dart';
 
 class AddExercise extends StatefulWidget {
-  // final String? temp;
   const AddExercise({
     super.key,
-    // this.temp,
   });
 
   @override
@@ -16,6 +15,7 @@ class AddExercise extends StatefulWidget {
 class _AddExerciseState extends State<AddExercise> {
   @override
   Widget build(BuildContext context) {
+    final tempdata = Provider.of<TempData>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
@@ -59,7 +59,7 @@ class _AddExerciseState extends State<AddExercise> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    TempData().data == null ? "sales" : TempData().data!,
+                    tempdata.data == null ? "sales" : tempdata.data!,
                     style: const TextStyle(color: Colors.white),
                   ),
                   IconButton(

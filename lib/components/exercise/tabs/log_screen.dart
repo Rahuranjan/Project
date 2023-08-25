@@ -173,14 +173,12 @@ class _LogScreenState extends State<LogScreen> {
                       Map<String, dynamic> data = {
                         "field1": _count,
                         "field2": _weightCount,
-                        "field3": Timestamp.now()
+                        "field3": Timestamp.now() 
                       };
                       FirebaseFirestore.instance.collection("users").add(data);
-                      if(_count!=0 && _weightCount!=0){
                         setState(() {
                           sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
                         });
-                      }
                     },
                     child: const Center(
                         child: Text(
@@ -210,7 +208,7 @@ class _LogScreenState extends State<LogScreen> {
                     physics:const ClampingScrollPhysics(),
                       itemCount: sets.length,
                       itemBuilder: (context, index) => getList(index)),
-                  const SizedBox(
+                  const SizedBox( 
                     height: 15,
                   ),
                   const Text(
