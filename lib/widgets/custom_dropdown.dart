@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/exercise/log.dart';
-
 import 'package:project/data/data_model.dart';
-
+import 'package:project/data/provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomDropdown extends StatefulWidget {
   const CustomDropdown({super.key});
@@ -27,20 +27,22 @@ class _CustomDropdownState extends State<CustomDropdown> {
     return Expanded(
       child: ListView.builder(
         itemCount: data.length,
-        itemBuilder: (context, index) => _buildlist(data[index],),
+        itemBuilder: (context, index) => _buildlist(
+          data[index],
+        ),
       ),
     );
   }
 
   Widget _buildlist(Menu list) {
+    final tile = Provider.of<PrimaryMuscleProvider>(context);
     if (list.subMenu.isEmpty) {
       return ListTile(
         onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        Log(title: list.name)));
+          tile.updateString(list.name);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const Log()));
+          print(tile.title);
         },
         title: Text(
           list.name,

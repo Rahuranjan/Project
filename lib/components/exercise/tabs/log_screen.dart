@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../data/provider.dart';
+
 
 class LogScreen extends StatefulWidget {
-  const LogScreen({super.key});
+  const LogScreen({super.key,});
 
   @override
   State<LogScreen> createState() => _LogScreenState();
@@ -15,6 +19,7 @@ class _LogScreenState extends State<LogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tile = Provider.of<PrimaryMuscleProvider>(context);
     return Container(
       color: Colors.black,
       child: ListView(
@@ -175,10 +180,14 @@ class _LogScreenState extends State<LogScreen> {
                         "field2": _weightCount,
                         "field3": Timestamp.now() 
                       };
-                      FirebaseFirestore.instance.collection("users").add(data);
-                        setState(() {
-                          sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
-                        });
+                      // FirebaseFirestore.instance.collection("exercises").add(data);
+                      //   setState(() {
+                      //     sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
+                      //   });
+                      FirebaseFirestore.instance.collection("exercises").doc("widget").collection(tile.title.toString()).add(data);
+                       setState(() {
+                         sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
+                       }); 
                     },
                     child: const Center(
                         child: Text(
@@ -189,39 +198,35 @@ class _LogScreenState extends State<LogScreen> {
                           fontSize: 20),
                     ))),
               ),
-              Column(
+              const Column(  
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                const  SizedBox(
+                SizedBox(
                     height: 15,
                   ),
-                 const Text(
+                 Text(
                     "Today's Session",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
                         fontSize: 20),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics:const ClampingScrollPhysics(),
-                      itemCount: sets.length,
-                      itemBuilder: (context, index) => getList(index)),
-                  const SizedBox( 
+                  SizedBox(
                     height: 15,
                   ),
-                  const Text(
+                  
+                  Text(
                     "Previous Session",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
                         fontSize: 20),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 15,
                   ),
-                  const Text(
+                  Text(
                     "View History",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -237,27 +242,6 @@ class _LogScreenState extends State<LogScreen> {
     );
   }
 
-  Widget getList(int index) {
-    return ListTile(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Reps: ${sets[index].reps}",
-            style: TextStyle(color: Colors.grey.shade400),
-          ),
-          Text(
-            "Weights:${sets[index].weights} kg",
-            style: TextStyle(color: Colors.grey.shade400),
-          ),
-          Text(
-            "e1RM: ",
-            style: TextStyle(color: Colors.grey.shade400),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class Set {

@@ -15,7 +15,7 @@ class AddExercise extends StatefulWidget {
 class _AddExerciseState extends State<AddExercise> {
   @override
   Widget build(BuildContext context) {
-    final tempdata = Provider.of<TempData>(context);
+    final tempdata = Provider.of<TempData>(context); 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,

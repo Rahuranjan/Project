@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:project/components/exercise/tabs/info.dart';
 import 'package:project/components/exercise/tabs/log_screen.dart';
 import 'package:project/components/exercise/tabs/my_stats.dart';
+import 'package:provider/provider.dart';
+
+import '../../data/provider.dart';
 
 class Log extends StatefulWidget {
-  final String title;
+  // final String title;
 
-  const Log({super.key, required this.title});
+  const Log({super.key,});
 
   @override
   State<Log> createState() => _LogState();
@@ -150,6 +153,7 @@ class _LogState extends State<Log> {
 
   @override
   Widget build(BuildContext context) {
+    final title = Provider.of<PrimaryMuscleProvider>(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -157,7 +161,7 @@ class _LogState extends State<Log> {
           centerTitle: true,
           backgroundColor: Colors.grey.shade900,
           title: Text(
-            widget.title,
+            title.title.toString(),
             style: const TextStyle(color: Colors.white),
           ),
           leading: IconButton(

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project/data/data_model.dart';
 
 class PrimaryMuscleProvider extends ChangeNotifier {
-  String temp = "sales";
-  List<Menu> data = [];
+  String? title;
 
-  void settemp(){
-    temp = data.toString() ;
-  }
+  void updateString(String stringdata) {
+    title = stringdata;
+    notifyListeners();
+  } 
 }

@@ -16,40 +16,48 @@ class _ShowDataState extends State<ShowData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.grey.shade900, 
         centerTitle: true,
-        title: Text("showdata", style: TextStyle(color: Colors.grey.shade400),),
+        title: Text(
+          "showdata",
+          style: TextStyle(color: Colors.grey.shade400),
+        ),
       ),
       body: Container(
         color: Colors.black,
         child: StreamBuilder(
           stream: FirebaseFirestore.instance.collection("users").snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
-            if(snapshot.hasError){
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
               return const Text("something went wrong");
             }
-            if(snapshot.connectionState == ConnectionState.waiting){
-              return const Center( child: CupertinoActivityIndicator(),);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CupertinoActivityIndicator(),
+              );
             }
-            if(snapshot.data!.docs.isEmpty){
+            if (snapshot.data!.docs.isEmpty) {
               return const Text("No Data found");
             }
 
-            if(snapshot.hasData){
+            if (snapshot.hasData) {
               return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index){
-                  return const Card(
-                    child: ListTile(
-                      title: Text("snapshot.data"),
-                    ),
-                  );
-                }
-                );
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                        title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Reps: ${snapshot.data!.docs[index]['field1']}'),
+                        Text('Reps: ${snapshot.data!.docs[index]['field2']}'),
+                        const Text("e1RM:")
+                      ],
+                    ));
+                  });
             }
             return Container();
           },
-          ),
+        ),
       ),
     );
   }
