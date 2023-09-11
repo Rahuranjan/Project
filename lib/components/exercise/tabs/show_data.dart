@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project/data/provider.dart';
+import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
+// import '../provider_select_muscles.dart';
 
 class ShowData extends StatefulWidget {
   const ShowData({super.key});
@@ -14,9 +18,11 @@ class _ShowDataState extends State<ShowData> {
   User? userId = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
+    // final selected = Provider.of<SelectMusclesProvider>(context);
+    final tile = Provider.of<PrimaryMuscleProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade900, 
+        backgroundColor: Colors.grey.shade900,
         centerTitle: true,
         title: Text(
           "showdata",
@@ -26,7 +32,13 @@ class _ShowDataState extends State<ShowData> {
       body: Container(
         color: Colors.black,
         child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("users").snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection("exercises")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('abs')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection(tile.title.toString())
+              .snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
               return const Text("something went wrong");
@@ -59,6 +71,13 @@ class _ShowDataState extends State<ShowData> {
           },
         ),
       ),
+      //     Container(
+      //     child: ListView.builder(
+      //       itemCount: selected.selectedMuscles.length,
+      //       itemBuilder: (context, index) => ListTile(
+      //             title: Text(selected.selectedMuscles[index]),
+      //           )),
+      // )
     );
   }
 }

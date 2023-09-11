@@ -110,16 +110,18 @@ class _AddWorkoutState extends State<AddWorkout> {
               height: 10,
             ),
             Expanded(
-                child: ListView.builder(
+                child: ListView.builder( 
                     itemCount: workoutDays.length,
                     itemBuilder: (context, index) {
                       return Consumer<WorkoutDaysProvider>(
                         builder: (context, value, child) => ListTile(
                           onTap: () {
-                            if (value.selectedDays.contains(index.toString())) {
-                              value.removeDays(index.toString());
+                            if (value.selectedDays.contains(workoutDays[index].toString())) { 
+                              // value.removeDays(index.toString());
+                              value.removeDays(workoutDays[index].toString());
                             } else {
-                              value.addDays(index.toString());
+                              // value.addDays(index.toString());
+                              value.addDays(workoutDays[index].toString());
                             }
                             print(value.selectedDays);
                           },
@@ -128,7 +130,7 @@ class _AddWorkoutState extends State<AddWorkout> {
                             style: const TextStyle(color: Colors.white),
                           ),
                           trailing: Icon(
-                            value.selectedDays.contains(index.toString())
+                            value.selectedDays.contains(workoutDays[index].toString())
                                 ? Icons.check
                                 : null,
                             color: Colors.yellow,

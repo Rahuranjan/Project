@@ -23,7 +23,7 @@ class AuthMethods {
             .collection('users')
             .doc(cred.user!.uid)
             .set({'email': email, 'uid': cred.user!.uid});
-        res = 'success';
+        res = 'success'; 
       }
     } on FirebaseAuthException catch (e) {
       res = e.code;

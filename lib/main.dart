@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/components/exercise/provider_select_muscles.dart';
 import 'package:project/components/exercise/tempdata.dart';
 import 'package:project/components/workouts/provider_workoutdays.dart';
 import 'package:project/data/provider.dart';
@@ -15,7 +16,7 @@ void main() async{
   await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 ); 
-  runApp(const MyApp());
+  runApp(const MyApp()); 
 }
  
 class MyApp extends StatelessWidget {
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) =>WorkoutDaysProvider()),
         ChangeNotifierProvider(create: (context) =>TempData()), 
-        ChangeNotifierProvider(create: (context) =>PrimaryMuscleProvider()),       
+        ChangeNotifierProvider(create: (context) =>PrimaryMuscleProvider()),
+        ChangeNotifierProvider(create: (context) =>SelectMusclesProvider()),       
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

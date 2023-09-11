@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/components/exercise/muscles_worked.dart';
 import 'package:project/components/exercise/primary_muscle.dart';
+// import 'package:project/components/exercise/provider_select_muscles.dart';
 import 'package:project/components/exercise/tempdata.dart';
+import 'package:project/data/provider.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class AddExercise extends StatefulWidget {
   const AddExercise({
@@ -13,9 +19,21 @@ class AddExercise extends StatefulWidget {
 }
 
 class _AddExerciseState extends State<AddExercise> {
+  final TextEditingController _exerciseNameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    _exerciseNameController.dispose();
+    _descriptionController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final tempdata = Provider.of<TempData>(context); 
+    final tempdata = Provider.of<TempData>(context);
+    // final selected = Provider.of<SelectMusclesProvider>(context);
+    final tile = Provider.of<PrimaryMuscleProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade900,
@@ -38,7 +56,19 @@ class _AddExerciseState extends State<AddExercise> {
             )),
         actions: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                String id = const Uuid().v1();
+                FirebaseFirestore.instance
+                    .collection("exercises")
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .collection(tile.temp.toString())
+                    .doc(id)
+                    .set({
+                  "Exercise": tempdata.data,
+                  "exercise name": _exerciseNameController.text,
+                  "Description": _descriptionController.text
+                });
+              },
               child: const Text(
                 "Save",
                 style: TextStyle(color: Colors.yellow, fontSize: 18),
@@ -59,7 +89,7 @@ class _AddExerciseState extends State<AddExercise> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tempdata.data == null ? "sales" : tempdata.data!,
+                    tempdata.data == null ? "abs" : tempdata.data!,
                     style: const TextStyle(color: Colors.white),
                   ),
                   IconButton(
@@ -83,6 +113,7 @@ class _AddExerciseState extends State<AddExercise> {
             Container(
               color: Colors.grey.shade900,
               child: TextField(
+                controller: _exerciseNameController,
                 keyboardType: TextInputType.text,
                 style: TextStyle(color: Colors.grey.shade400),
                 decoration: InputDecoration(
@@ -103,6 +134,7 @@ class _AddExerciseState extends State<AddExercise> {
               child: TextField(
                 style: TextStyle(color: Colors.grey.shade400),
                 keyboardType: TextInputType.text,
+                controller: _descriptionController,
                 decoration: InputDecoration(
                     hintText: "Description (Optional)",
                     enabledBorder: const OutlineInputBorder(
@@ -117,25 +149,47 @@ class _AddExerciseState extends State<AddExercise> {
               height: 10,
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               color: Colors.grey.shade900,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Other Muscles Worked",
-                    style: TextStyle(color: Colors.grey.shade500),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Other Muscles Worked",
+                        style: TextStyle(color: Colors.grey.shade500),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MusclesWorked()));
+                          },
+                          icon: const Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: 15,
+                          ))
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                        size: 15,
-                      ))
+                   
                 ],
               ),
-            )
+            ),
+            // Container(
+            //         width: double.infinity,
+            //         height: 50,
+            //          child: ListView.builder(
+            //           scrollDirection: Axis.horizontal,
+            //               itemCount: selected.selectedMuscles.length,
+            //               itemBuilder: (context, index) => ListTile(
+            //                 title: Text(selected.selectedMuscles[index]),
+            //               )),
+            //        )
           ],
         ),
       ),

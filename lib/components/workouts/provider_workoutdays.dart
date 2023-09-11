@@ -12,6 +12,6 @@ class WorkoutDaysProvider extends ChangeNotifier{
 
   void removeDays(String day){
     _selectedDays.remove(day.toString());
-    notifyListeners();
+    notifyListeners(); 
   }
 }

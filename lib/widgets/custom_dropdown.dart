@@ -13,6 +13,7 @@ class CustomDropdown extends StatefulWidget {
 
 class _CustomDropdownState extends State<CustomDropdown> {
   List<Menu> data = [];
+  
 
   @override
   void initState() {
@@ -40,9 +41,11 @@ class _CustomDropdownState extends State<CustomDropdown> {
       return ListTile(
         onTap: () {
           tile.updateString(list.name);
+          
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => const Log()));
           print(tile.title);
+         
         },
         title: Text(
           list.name,
@@ -55,6 +58,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
       );
     }
     return ExpansionTile(
+      onExpansionChanged: (value) {
+        tile.updateTemp(list.name);
+        print(tile.temp);
+      },
       title: Text(
         list.name,
         style: const TextStyle(color: Colors.white),

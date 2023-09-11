@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/provider.dart';
 
-
 class LogScreen extends StatefulWidget {
-  const LogScreen({super.key,});
+  const LogScreen({
+    super.key,
+  });
 
   @override
   State<LogScreen> createState() => _LogScreenState();
@@ -19,7 +21,7 @@ class _LogScreenState extends State<LogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tile = Provider.of<PrimaryMuscleProvider>(context);
+    final tile = Provider.of<PrimaryMuscleProvider>(context); 
     return Container(
       color: Colors.black,
       child: ListView(
@@ -178,16 +180,25 @@ class _LogScreenState extends State<LogScreen> {
                       Map<String, dynamic> data = {
                         "field1": _count,
                         "field2": _weightCount,
-                        "field3": Timestamp.now() 
+                        "field3": Timestamp.now()
                       };
                       // FirebaseFirestore.instance.collection("exercises").add(data);
                       //   setState(() {
                       //     sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
                       //   });
-                      FirebaseFirestore.instance.collection("exercises").doc("widget").collection(tile.title.toString()).add(data);
-                       setState(() {
-                         sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
-                       }); 
+                      FirebaseFirestore.instance
+                          .collection("exercises")
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection(tile.temp.toString())
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection(tile.title.toString())
+                          .add(data);
+                      setState(() {
+                        sets.add(Set(
+                            reps: _count,
+                            weights: _weightCount,
+                            currentTime: Timestamp.now()));
+                      });
                     },
                     child: const Center(
                         child: Text(
@@ -198,14 +209,14 @@ class _LogScreenState extends State<LogScreen> {
                           fontSize: 20),
                     ))),
               ),
-              const Column(  
+              const Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                SizedBox(
+                  SizedBox(
                     height: 15,
                   ),
-                 Text(
+                  Text(
                     "Today's Session",
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -215,7 +226,6 @@ class _LogScreenState extends State<LogScreen> {
                   SizedBox(
                     height: 15,
                   ),
-                  
                   Text(
                     "Previous Session",
                     style: TextStyle(
@@ -241,7 +251,6 @@ class _LogScreenState extends State<LogScreen> {
       ),
     );
   }
-
 }
 
 class Set {
