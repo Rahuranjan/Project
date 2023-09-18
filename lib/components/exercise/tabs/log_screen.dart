@@ -51,8 +51,8 @@ class _LogScreenState extends State<LogScreen> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black, width: 1.5)),
+                              border:
+                                  Border.all(color: Colors.black, width: 1.5)),
                           child: Center(
                               child: Text(
                             '$_count',
@@ -117,8 +117,8 @@ class _LogScreenState extends State<LogScreen> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black, width: 1.5)),
+                              border:
+                                  Border.all(color: Colors.black, width: 1.5)),
                           child: Center(
                               child: Text(
                             "$_weightCount",
@@ -130,7 +130,7 @@ class _LogScreenState extends State<LogScreen> {
                             setState(() {
                               _weightCount--;
                               if (_weightCount < 0) {
-                                _weightCount = 0;   
+                                _weightCount = 0;
                               }
                             });
                           },
@@ -207,86 +207,111 @@ class _LogScreenState extends State<LogScreen> {
                           fontSize: 20),
                     ))),
               ),
-              const Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "Today's Session",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey,
-                        fontSize: 20),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  // Expanded(
-                  //   child: StreamBuilder(
-                  //     stream: FirebaseFirestore.instance
-                  //         .collection("exercises")
-                  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-                  //         .collection(tile.temp.toString())
-                  //         .doc(FirebaseAuth.instance.currentUser!.uid)
-                  //         .collection(tile.title.toString())
-                  //         .snapshots(),
-                  //     builder:
-                  //         (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  //       if (snapshot.hasError) {
-                  //         return const Text("something went wrong");
-                  //       }
-                  //       if (snapshot.connectionState ==
-                  //           ConnectionState.waiting) {
-                  //         return const Center(
-                  //           child: CupertinoActivityIndicator(),
-                  //         );
-                  //       }
-                  //       if (snapshot.data!.docs.isEmpty) {
-                  //         return const Text("No Data found");
-                  //       }            
-                  //       if (snapshot.hasData) {
-                  //         return ListView.builder(
-                  //             itemCount: snapshot.data!.docs.length,
-                  //             itemBuilder: (context, index) {
-                  //               return ListTile(
-                  //                   title: Row(
-                  //                 mainAxisAlignment:
-                  //                     MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Text(
-                  //                       'Reps: ${snapshot.data!.docs[index]['field1']}'),
-                  //                   Text(
-                  //                       'Reps: ${snapshot.data!.docs[index]['field2']}'),
-                  //                   const Text("e1RM:")
-                  //                 ],
-                  //               ));
-                  //             });
-                  //       }
-                  //       return Container();
-                  //     },
-                  //   ),
-                  // ),
-                  Text(
-                    "Previous Session",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey,
-                        fontSize: 20),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "View History",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.yellow,
-                        fontSize: 20),
-                  ),
-                ],
+              Container(
+                height: 150,
+                width: 320,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Today's Session",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                          fontSize: 20),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Expanded(
+                      child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("exercises")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection(tile.temp.toString())
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection(tile.title.toString())
+                            .snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return const Text(
+                              "something went wrong",
+                              style: TextStyle(
+                                color: Color(0xFFFFFFFF),
+                              ),
+                            );
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CupertinoActivityIndicator(),
+                            );
+                          }
+                          if (snapshot.data!.docs.isEmpty) {
+                            return const Text(
+                              "No Data found",
+                              style: TextStyle(
+                                color: Color(0xFFFFFFFF),
+                              ),
+                            );
+                          }
+                          if (snapshot.hasData) {
+                            return Container(
+                              height: 200,
+                              width: 220,
+                              child: ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            'Reps: ${snapshot.data!.docs[index]['field1']}',
+                                            style: const TextStyle(
+                                                color: Colors.white)),
+                                        Text(
+                                          'Reps: ${snapshot.data!.docs[index]['field2']}',
+                                          style: const TextStyle(
+                                              color: Color(0xFFFFFFFF)),
+                                        ),
+                                        const Text("e1RM:",
+                                            style: TextStyle(
+                                              color: Color(0xFFFFFFFF),
+                                            ))
+                                      ],
+                                    );
+                                  }),
+                            );
+                          }
+                          return Container();
+                        },
+                      ),
+                    ),
+                    Text(
+                      "Previous Session",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                          fontSize: 20),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "View History",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.yellow,
+                          fontSize: 20),
+                    ),
+                  ],
+                ),
               )
             ],
           ),

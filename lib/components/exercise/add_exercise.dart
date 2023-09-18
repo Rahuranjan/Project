@@ -50,7 +50,7 @@ class _AddExerciseState extends State<AddExercise> {
               child: Center(
                   child: Text(
                 "Cancel",
-                style: TextStyle(color: Colors.yellow, fontSize: 18),
+                style: TextStyle(color: Colors.yellow, fontSize: 16),
               )),
             )),
         actions: [
@@ -75,121 +75,142 @@ class _AddExerciseState extends State<AddExercise> {
               ))
         ],
       ),
-      body: Container(
-        color: Colors.black,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              color: Colors.grey.shade900,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    tempdata.data == null ? "abs" : tempdata.data!,
-                    style: const TextStyle(color: Colors.white),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.black,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                color: Colors.grey.shade900,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      tempdata.data == null ? "abs" : tempdata.data!,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const PrimaryMuscle()));
+                        },
+                        icon: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.white,
+                          size: 15,
+                        ))
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                color: Colors.grey.shade900,
+                child: TextField(
+                  controller: _exerciseNameController,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(color: Colors.grey.shade400),
+                  decoration: InputDecoration(
+                      hintText: "Exercise Name",
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      fillColor: Colors.grey.shade900,
+                      filled: true),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                color: Colors.grey.shade900,
+                child: TextField(
+                  style: TextStyle(color: Colors.grey.shade400),
+                  keyboardType: TextInputType.text,
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                      hintText: "Description (Optional)",
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      fillColor: Colors.grey.shade900,
+                      filled: true),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                color: Colors.grey.shade900,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Other Muscles Worked",
+                          style: TextStyle(color: Colors.grey.shade500),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MusclesWorked()));
+                            },
+                            icon: const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: 15,
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: 320,
+                height: 120,
+                margin: const EdgeInsets.only(top: 20),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: selected.selectedMuscles.length,
+                  itemBuilder: (context, index) => Text(
+                    "${selected.selectedMuscles[index]}, ",
+                    style: const TextStyle(
+                      color: Color(0xFFFFFFFF),
+                    ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const PrimaryMuscle()));
-                      },
-                      icon: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                        size: 15,
-                      ))
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              color: Colors.grey.shade900,
-              child: TextField(
-                controller: _exerciseNameController,
-                keyboardType: TextInputType.text,
-                style: TextStyle(color: Colors.grey.shade400),
-                decoration: InputDecoration(
-                    hintText: "Exercise Name",
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    fillColor: Colors.grey.shade900,
-                    filled: true),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              color: Colors.grey.shade900,
-              child: TextField(
-                style: TextStyle(color: Colors.grey.shade400),
-                keyboardType: TextInputType.text,
-                controller: _descriptionController,
-                decoration: InputDecoration(
-                    hintText: "Description (Optional)",
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    fillColor: Colors.grey.shade900,
-                    filled: true),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              color: Colors.grey.shade900,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Other Muscles Worked",
-                        style: TextStyle(color: Colors.grey.shade500),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MusclesWorked()));
-                          },
-                          icon: const Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.white,
-                            size: 15,
-                          ))
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Container(
-            //         width: double.infinity,
-            //         height: 50,
-            //          child: ListView.builder(
-            //           scrollDirection: Axis.horizontal,
-            //               itemCount: selected.selectedMuscles.length,
-            //               itemBuilder: (context, index) => ListTile(
-            //                 title: Text(selected.selectedMuscles[index]),
-            //               )),
-            //        )
-          ],
+
+                  // Container(
+                  //   width: 120,
+                  //   height: 100,
+                  //   child: ListTile(
+                  //     title: Text(
+                  //       selected.selectedMuscles[index],
+                  //       style: const TextStyle(
+                  //         color: Color(0xFFFFFFFF),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
