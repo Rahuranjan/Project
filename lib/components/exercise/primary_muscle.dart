@@ -56,7 +56,7 @@ class _PrimaryMuscleState extends State<PrimaryMuscle> {
                   style: const TextStyle(color: Colors.white),
                 ),
                 trailing: temp == data[index].name
-                    ? const Icon(
+                    ? const Icon( 
                         Icons.check,
                         color: Colors.yellow,
                       )

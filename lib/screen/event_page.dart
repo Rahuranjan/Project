@@ -19,7 +19,7 @@ class EventPage extends StatelessWidget {
               icon: const Icon(Icons.arrow_back), 
               color: Colors.yellow,
             ),
-            const Text("Back", style: TextStyle(color: Colors.yellow),),
+            // const Text("Back", style: TextStyle(color: Colors.yellow),),
             
           ],
         ),

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/data/provider.dart';
 import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
 // import '../provider_select_muscles.dart';
 
 class ShowData extends StatefulWidget {
@@ -21,63 +20,55 @@ class _ShowDataState extends State<ShowData> {
     // final selected = Provider.of<SelectMusclesProvider>(context);
     final tile = Provider.of<PrimaryMuscleProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey.shade900,
-        centerTitle: true,
-        title: Text(
-          "showdata",
-          style: TextStyle(color: Colors.grey.shade400),
+        appBar: AppBar(
+          backgroundColor: Colors.grey.shade900,
+          centerTitle: true,
+          title: Text(
+            "showdata",
+            style: TextStyle(color: Colors.grey.shade400),
+          ),
         ),
-      ),
-      body: Container(
-        color: Colors.black,
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection("exercises")
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .collection('abs')
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .collection(tile.title.toString())
-              .snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return const Text("something went wrong");
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CupertinoActivityIndicator(),
-              );
-            }
-            if (snapshot.data!.docs.isEmpty) {
-              return const Text("No Data found");
-            }
+        body:
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("exercises")
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .collection(tile.temp.toString())
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .collection(tile.title.toString())
+                  .snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Text("something went wrong");
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CupertinoActivityIndicator(),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return const Text("No Data found");
+                }
 
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                        title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Reps: ${snapshot.data!.docs[index]['field1']}'),
-                        Text('Reps: ${snapshot.data!.docs[index]['field2']}'),
-                        const Text("e1RM:")
-                      ],
-                    ));
-                  });
-            }
-            return Container();
-          },
-        ),
-      ),
-      //     Container(
-      //     child: ListView.builder(
-      //       itemCount: selected.selectedMuscles.length,
-      //       itemBuilder: (context, index) => ListTile(
-      //             title: Text(selected.selectedMuscles[index]),
-      //           )),
-      // )
-    );
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                            title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Reps: ${snapshot.data!.docs[index]['field1']}'),
+                            Text('Reps: ${snapshot.data!.docs[index]['field2']}'),
+                            const Text("e1RM:")
+                          ],
+                        ));
+                      });
+                }
+                return Container();
+              },
+            ),
+            
+              );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class _LogScreenState extends State<LogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tile = Provider.of<PrimaryMuscleProvider>(context); 
+    final tile = Provider.of<PrimaryMuscleProvider>(context);
     return Container(
       color: Colors.black,
       child: ListView(
@@ -50,8 +51,8 @@ class _LogScreenState extends State<LogScreen> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.black, width: 1.5)),
+                              border: Border.all(
+                                  color: Colors.black, width: 1.5)),
                           child: Center(
                               child: Text(
                             '$_count',
@@ -116,8 +117,8 @@ class _LogScreenState extends State<LogScreen> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 5),
                           decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.black, width: 1.5)),
+                              border: Border.all(
+                                  color: Colors.black, width: 1.5)),
                           child: Center(
                               child: Text(
                             "$_weightCount",
@@ -129,7 +130,7 @@ class _LogScreenState extends State<LogScreen> {
                             setState(() {
                               _weightCount--;
                               if (_weightCount < 0) {
-                                _weightCount = 0;
+                                _weightCount = 0;   
                               }
                             });
                           },
@@ -182,10 +183,7 @@ class _LogScreenState extends State<LogScreen> {
                         "field2": _weightCount,
                         "field3": Timestamp.now()
                       };
-                      // FirebaseFirestore.instance.collection("exercises").add(data);
-                      //   setState(() {
-                      //     sets.add(Set(reps: _count, weights: _weightCount,currentTime: Timestamp.now()));
-                      //   });
+
                       FirebaseFirestore.instance
                           .collection("exercises")
                           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -226,6 +224,51 @@ class _LogScreenState extends State<LogScreen> {
                   SizedBox(
                     height: 15,
                   ),
+                  // Expanded(
+                  //   child: StreamBuilder(
+                  //     stream: FirebaseFirestore.instance
+                  //         .collection("exercises")
+                  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+                  //         .collection(tile.temp.toString())
+                  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+                  //         .collection(tile.title.toString())
+                  //         .snapshots(),
+                  //     builder:
+                  //         (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  //       if (snapshot.hasError) {
+                  //         return const Text("something went wrong");
+                  //       }
+                  //       if (snapshot.connectionState ==
+                  //           ConnectionState.waiting) {
+                  //         return const Center(
+                  //           child: CupertinoActivityIndicator(),
+                  //         );
+                  //       }
+                  //       if (snapshot.data!.docs.isEmpty) {
+                  //         return const Text("No Data found");
+                  //       }            
+                  //       if (snapshot.hasData) {
+                  //         return ListView.builder(
+                  //             itemCount: snapshot.data!.docs.length,
+                  //             itemBuilder: (context, index) {
+                  //               return ListTile(
+                  //                   title: Row(
+                  //                 mainAxisAlignment:
+                  //                     MainAxisAlignment.spaceBetween,
+                  //                 children: [
+                  //                   Text(
+                  //                       'Reps: ${snapshot.data!.docs[index]['field1']}'),
+                  //                   Text(
+                  //                       'Reps: ${snapshot.data!.docs[index]['field2']}'),
+                  //                   const Text("e1RM:")
+                  //                 ],
+                  //               ));
+                  //             });
+                  //       }
+                  //       return Container();
+                  //     },
+                  //   ),
+                  // ),
                   Text(
                     "Previous Session",
                     style: TextStyle(

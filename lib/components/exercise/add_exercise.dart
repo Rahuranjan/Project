@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/exercise/muscles_worked.dart';
 import 'package:project/components/exercise/primary_muscle.dart';
-// import 'package:project/components/exercise/provider_select_muscles.dart';
+import 'package:project/components/exercise/provider_select_muscles.dart';
 import 'package:project/components/exercise/tempdata.dart';
-import 'package:project/data/provider.dart';
+// import 'package:project/data/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -31,8 +31,7 @@ class _AddExerciseState extends State<AddExercise> {
   @override
   Widget build(BuildContext context) {
     final tempdata = Provider.of<TempData>(context);
-    // final selected = Provider.of<SelectMusclesProvider>(context);
-    final tile = Provider.of<PrimaryMuscleProvider>(context);
+    final selected = Provider.of<SelectMusclesProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -61,12 +60,13 @@ class _AddExerciseState extends State<AddExercise> {
                 FirebaseFirestore.instance
                     .collection("exercises")
                     .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection(tile.temp.toString())
+                    .collection(tempdata.data.toString())
                     .doc(id)
                     .set({
                   "Exercise": tempdata.data,
                   "exercise name": _exerciseNameController.text,
-                  "Description": _descriptionController.text
+                  "Description": _descriptionController.text,
+                  "musclesWorked": selected.selectedMuscles
                 });
               },
               child: const Text(
@@ -176,7 +176,6 @@ class _AddExerciseState extends State<AddExercise> {
                           ))
                     ],
                   ),
-                   
                 ],
               ),
             ),
