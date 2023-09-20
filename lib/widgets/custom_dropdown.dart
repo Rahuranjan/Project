@@ -14,7 +14,6 @@ class CustomDropdown extends StatefulWidget {
 class _CustomDropdownState extends State<CustomDropdown> {
   List<Menu> data = [];
 
-
   @override
   void initState() {
     for (var element in datalist) {
@@ -35,6 +34,39 @@ class _CustomDropdownState extends State<CustomDropdown> {
     );
   }
 
+  // Object _buildlist(Menu list) {
+  //   final tile = Provider.of<PrimaryMuscleProvider>(context);
+  //   //check if the submenu is empty. id it is empty, create a ListTile.
+  //   if (list.subMenu.isEmpty) {
+  //     return ListTile(
+  //       onTap: () {
+  //         tile.updateString(list.name);
+  //         Navigator.push(
+  //             context, MaterialPageRoute(builder: (context) => const Log()));
+  //         print(tile.title);
+  //       },
+  //       title: Text(
+  //         list.name,
+  //         style: const TextStyle(color: Colors.white),
+  //       ),
+  //       leading: Icon(
+  //         list.icon,
+  //         color: Colors.red,
+  //       ),
+  //     );
+  //   }
+  //   return ExpansionPanel(
+  //     headerBuilder: (context, isExpanded){
+  //       return ListTile(
+  //         title: Text(list.name, style: TextStyle(color: Colors.white),),
+
+  //       );
+  //     }, 
+  //     body: Column(
+  //       children: list.subMenu.map(_buildlist).toList(),
+  //     )
+  //     );
+  // }
   Widget _buildlist(Menu list) {
     final tile = Provider.of<PrimaryMuscleProvider>(context);
     if (list.subMenu.isEmpty) {
@@ -55,7 +87,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
         ),
       );
     }
-    return ExpansionTile(
+    return
+    ExpansionTile(
       onExpansionChanged: (value) {
         tile.updateTemp(list.name);
         print(tile.temp);
@@ -67,5 +100,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
       children: list.subMenu.map(_buildlist).toList(),
       // children: list.subMenu.map((e) => _buildlist(e,)).toList(),
     );
+
   }
 }
