@@ -32,10 +32,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade900,
         centerTitle: true,
         title: const Text(
           "Calendar",
@@ -46,27 +46,21 @@ class _CalendarScreenState extends State<CalendarScreen> {
           color: Colors.yellow,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-                child: TableCalendar(
-              headerStyle: const HeaderStyle(
-                formatButtonVisible: false, titleCentered: true
-              ),
-              locale: 'en_US',
-              firstDay: DateTime.utc(2010, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              focusedDay: DateTime.now(),
-              calendarStyle: const CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                      color: Colors.yellow, shape: BoxShape.circle)),
-
-              
-              onDaySelected: selectedDay,
-            ))
-          ],
-        ),
+      body: Container(
+        color: Colors.black, 
+        child: TableCalendar(
+         headerStyle: const HeaderStyle(
+           formatButtonVisible: false, titleCentered: true
+         ),
+         locale: 'en_US',
+         firstDay: DateTime.utc(2010, 10, 16),
+         lastDay: DateTime.utc(2030, 3, 14),
+         focusedDay: DateTime.now(),
+         calendarStyle: const CalendarStyle(
+             todayDecoration: BoxDecoration(
+                 color: Colors.yellow, shape: BoxShape.circle)),
+         onDaySelected: selectedDay,
+          ),
       ),
     );
   }

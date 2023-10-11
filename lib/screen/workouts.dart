@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/workouts/addworkout.dart';
+// import 'package:project/components/workouts/provider_workoutdays.dart';
+// import 'package:provider/provider.dart';
 
 class Workouts extends StatefulWidget {
   const Workouts({super.key});
@@ -15,6 +17,7 @@ class Workouts extends StatefulWidget {
 class _WorkoutsState extends State<Workouts> {
   @override
   Widget build(BuildContext context) {
+    // final selectedWorkedDays = Provider.of<WorkoutDaysProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -96,106 +99,120 @@ class _WorkoutsState extends State<Workouts> {
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
-                                                  return Container(
-                                                    height: 170,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      color: Colors.grey,
-                                                    ),
-                                                    child: Column(
+                                                  return SizedBox(
+                                                    height: 270,
+                                                    child: ListView(
                                                       children: [
-                                                        GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.push(context, MaterialPageRoute(builder: (context) => const AddWorkout()));
-                                                            },
-                                                            child:
-                                                                const Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(top: 8),
-                                                              child: Text(
-                                                                "Edit",
+                                                        Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.grey,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                          child: Column(
+                                                            children: [
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                const AddWorkout()));
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                    "Edit",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w900,
+                                                                        fontSize:
+                                                                            18),
+                                                                  )),
+                                                              const Divider(
+                                                                thickness: 1,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {},
+                                                                  child:
+                                                                      const Text(
+                                                                    "Add to Program",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w900,
+                                                                        fontSize:
+                                                                            18),
+                                                                  )),
+                                                              const Divider(
+                                                                thickness: 1,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            "users")
+                                                                        .doc(FirebaseAuth
+                                                                            .instance
+                                                                            .currentUser!
+                                                                            .uid)
+                                                                        .collection(
+                                                                            "Workouts")
+                                                                        .doc(
+                                                                            "Dqg6pSglr1t7mVt5nvyD")
+                                                                        .delete();
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                    "Delete",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w900,
+                                                                        fontSize:
+                                                                            18,
+                                                                        color: Colors
+                                                                            .red),
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  Colors.white,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                          child: TextButton(
+                                                              onPressed: () {
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                              child: const Text(
+                                                                "Cancel",
                                                                 style: TextStyle(
-                                                                    color: Colors
-                                                                        .blue,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .bold,
+                                                                            .w900,
                                                                     fontSize:
-                                                                        20),
-                                                              ),
-                                                            )),
-                                                        const Divider(
-                                                          thickness: 1,
-                                                          color: Colors.black,
+                                                                        18),
+                                                              )),
                                                         ),
-                                                        GestureDetector(
-                                                            onTap: () {},
-                                                            child: const Text(
-                                                              "Add to Program",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .blue,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 20),
-                                                            )),
-                                                        const Divider(
-                                                          thickness: 1,
-                                                          color: Colors.black,
-                                                        ),
-                                                        GestureDetector(
-                                                            onTap: () {
-                                                              FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                      "users")
-                                                                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                                                                  .collection("Workouts")
-                                                                  .doc("Dqg6pSglr1t7mVt5nvyD").delete();
-                                                            },
-                                                            child: const Text(
-                                                              "Delete",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .red,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 20),
-                                                            )),
-                                                        const Divider(
-                                                          thickness: 8,
-                                                          color: Colors.black,
-                                                        ),
-                                                        TextButton(
-                                                            onPressed: () {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: const Text(
-                                                              "Cancel",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .blue,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 20),
-                                                            )),
-
-                                                        // GestureDetector(
-                                                        //   onTap: () {
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //         child: const Text("Cancel",
-                                                        //   style: TextStyle(
-                                                        //       color: Colors.blue,
-                                                        //       fontWeight: FontWeight.bold,
-                                                        //       fontSize: 20),
-                                                        // ))
                                                       ],
                                                     ),
                                                   );
@@ -215,12 +232,27 @@ class _WorkoutsState extends State<Workouts> {
                                             : '${snapshot.data!.docs[index]['Description(Optional)']}',
                                         textAlign: TextAlign.justify,
                                       ),
-                                      const Row(
+                                      Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("data"),
-                                          Row(
+                                          Container(
+                                            width: 300,
+                                            height: 20,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemCount:
+                                                    snapshot.data!.docs.length,
+                                                itemBuilder: (context, index) =>
+                                                     Text(
+                                                      // "text, ",
+                                                      "${snapshot.data!.docs[index]['Workout Days']}, ",
+                                                      style: const TextStyle(
+                                                          color: Colors.white),
+                                                    )),
+                                          ),
+                                          const Row(
                                             children: [
                                               Icon(Icons.fitness_center),
                                               Text(

@@ -130,7 +130,7 @@ class _AddExerciseState extends State<AddExercise> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
+              Container( 
                 color: Colors.grey.shade900,
                 child: TextField(
                   style: TextStyle(color: Colors.grey.shade400),
@@ -178,37 +178,24 @@ class _AddExerciseState extends State<AddExercise> {
                             ))
                       ],
                     ),
+                    Container(
+                      width: 320,
+                      height: 20,
+                      // margin: const EdgeInsets.all(10),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: selected.selectedMuscles.length,
+                        itemBuilder: (context, index) => Text(
+                          "${selected.selectedMuscles[index]}, ", style: const TextStyle(
+                            color: Colors.white
+                          ),
+                        )),
+                    )
                   ],
                 ),
+                
               ),
-              Container(
-                width: 320,
-                height: 120,
-                margin: const EdgeInsets.only(top: 20),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: selected.selectedMuscles.length,
-                  itemBuilder: (context, index) => Text(
-                    "${selected.selectedMuscles[index]}, ",
-                    style: const TextStyle(
-                      color: Color(0xFFFFFFFF),
-                    ),
-                  ),
-
-                  // Container(
-                  //   width: 120,
-                  //   height: 100,
-                  //   child: ListTile(
-                  //     title: Text(
-                  //       selected.selectedMuscles[index],
-                  //       style: const TextStyle(
-                  //         color: Color(0xFFFFFFFF),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ),
-              )
+              
             ],
           ),
         ),

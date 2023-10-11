@@ -95,7 +95,7 @@ List datalist = [
             "name": "Deadlift(Barbell)"
           },
           {
-            "name": "Deadlift(Dumbbell)"
+            "name": "Deadlift(Barbell)"
           },
           {
             "name": "deadlift(Smith)"

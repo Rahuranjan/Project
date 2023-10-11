@@ -70,22 +70,27 @@ class _MusclesWorkedState extends State<MusclesWorked> {
                   }
                   print(value.selectedMuscles);
                 },
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
+                title: Text(
                       musclesWorked[index],
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Divider(
-                      color: Colors.black,
-                    ),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(  
+                //       musclesWorked[index],
+                //       style: const TextStyle(fontWeight: FontWeight.bold),
+                //     ),
+                   
+                //     const SizedBox(
+                //       height: 10,
+                //     ),
+                //     const Divider(
+                //       color: Colors.black,
+                //     ),
+                //   ],
+                // ),
                 trailing: Icon(
                   value.selectedMuscles.contains(musclesWorked[index])
                       ? Icons.check

@@ -191,6 +191,13 @@ class _LogScreenState extends State<LogScreen> {
                           .doc(FirebaseAuth.instance.currentUser!.uid)
                           .collection(tile.title.toString())
                           .add(data);
+                      // FirebaseFirestore.instance
+                      //     .collection("exercises")
+                      //     .doc("exercise_doc_id")
+                      //     .collection(tile.temp.toString())
+                      //     .doc("sub_exercise_id")
+                      //     .collection(tile.title.toString())
+                      //     .add(data);
                       setState(() {
                         sets.add(Set(
                             reps: _count,
@@ -214,17 +221,17 @@ class _LogScreenState extends State<LogScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      "Today's Session",
+                    const Text(
+                      "Today's Session",   
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
                           fontSize: 20),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Expanded(
@@ -234,7 +241,7 @@ class _LogScreenState extends State<LogScreen> {
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .collection(tile.temp.toString())
                             .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .collection(tile.title.toString())
+                            .collection(tile.title.toString()) 
                             .snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -293,17 +300,17 @@ class _LogScreenState extends State<LogScreen> {
                         },
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Previous Session",
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
                           fontSize: 20),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    Text(
+                    const Text(
                       "View History",
                       style: TextStyle(
                           fontWeight: FontWeight.w400,

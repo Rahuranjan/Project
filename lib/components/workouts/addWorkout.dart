@@ -131,10 +131,7 @@ class _AddWorkoutState extends State<AddWorkout> {
                   child: ListView.builder(
                       itemCount: workoutDays.length,
                       itemBuilder: (context, index) {
-                        return 
-                        // Consumer<WorkoutDaysProvider>(
-                          // builder: (context, value, child) => 
-                          ListTile(
+                        return ListTile(
                             onTap: () {
                               if (value.selectedDays
                                   .contains(workoutDays[index].toString())) {
@@ -158,7 +155,6 @@ class _AddWorkoutState extends State<AddWorkout> {
                               color: Colors.yellow,
                             ),
                           );
-                        // );
                       })),
             ],
           ),
