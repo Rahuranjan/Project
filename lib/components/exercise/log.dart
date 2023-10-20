@@ -161,7 +161,7 @@ class _LogState extends State<Log> {
           centerTitle: true,
           backgroundColor: Colors.grey.shade900,
           title: Text(
-            title.title.toString(),
+            title.subMenuItemName.toString(),
             style: const TextStyle(color: Colors.white),
           ),
           leading: IconButton(
@@ -215,14 +215,4 @@ class _LogState extends State<Log> {
       ),
     );
   }
-
-  // Widget tickMark(BuildContext context) {
-  //   return CheckboxListTile(
-  //       value: isChecked,
-  //       onChanged: (newValue) {
-  //         setState(() {
-  //           isChecked = newValue!;
-  //         });
-  //       });
-  // }
 }

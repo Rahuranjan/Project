@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:project/components/exercise/log.dart';
-import 'package:project/data/data_model.dart';
-// import 'package:project/data/provider.dart';
-// import 'package:provider/provider.dart'; 
+import 'package:project/components/exercise/log.dart';
+import 'package:project/data/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CustomDropdown extends StatefulWidget {
@@ -13,8 +12,6 @@ class CustomDropdown extends StatefulWidget {
 }
 
 class _CustomDropdownState extends State<CustomDropdown> {
-  List<Menu> data = [];
-  String? _expandedCategory;
 
   List<Item> _data = [];
 
@@ -25,64 +22,72 @@ class _CustomDropdownState extends State<CustomDropdown> {
   }
 
   Future<void> _loadData() async {
-    final categories = await FirebaseFirestore.instance.collection("Admin_exercises").get();
-    final items = await Future.wait(categories.docs.map<Future<Item>>((category) async {
+    final categories =
+        await FirebaseFirestore.instance.collection("Admin_exercises").get();
+    final items =
+        await Future.wait(categories.docs.map<Future<Item>>((category) async {
       final subMenuCollection = category.reference.collection("subMenu");
       final subMenuItems = (await subMenuCollection.get()).docs.toList();
       return Item(
-        category['name'], 
+        category['name'],
         subMenuItems,
-        );
+      );
     }).toList());
-    
+
     setState(() {
       _data = items;
-    });
-    
-  }
-
-  void _handlePanelTapped(String category) {
-    setState(() {
-      if (_expandedCategory == category) {
-        // If the tapped panel is already open, close it.
-        _expandedCategory = null;
-      } else {
-        // Open the tapped panel.
-        _expandedCategory = category;
-      }
     });
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    final tile = Provider.of<PrimaryMuscleProvider>(context);
     return Expanded(
-      child: ListView(
-        children: _data.map<Widget>((Item item) {
-          return ExpansionPanelList.radio(
-            children: [
-              ExpansionPanelRadio(
-                backgroundColor: Colors.black,
-                canTapOnHeader: true,
-                value: item.categoryName, 
-                headerBuilder: (context, isExpanded){
-                  return ListTile(
-                    title: Text(item.categoryName),
-                  );
-                }, 
-                body: Column(
-                  children: item.subMenuItems.map((subMenuItem) {
-                    // final desc = subMenuItem['desc']?.toString() ?? 'Description Not Available';
-                    return ListTile(
-                      title: Text(subMenuItem['name']),
-                      // leading: Text("desc"),
+      child: ListView(children: [
+        Container(
+          padding: EdgeInsets.zero,
+          margin: EdgeInsets.zero,
+          child: ExpansionPanelList.radio(
+              elevation: 0,
+              expandedHeaderPadding: EdgeInsets.zero,
+              children: _data.map<ExpansionPanelRadio>((Item item) {
+                return ExpansionPanelRadio(
+                  // In ExpansionPanelRadio widget I wanted to use property like onExpansionChanged and store the categoryName 
+                  // like : ...
+                  // onExpansionChanged: (value) {
+                  //   tile.updateExerciseName(list.categoryName);
+                  // },
+                  // there is no property like onExpensionChanged for ExpansionPanelRadio
+                  // if i am using GestureDetector to use ontap property on ListTile then cantapOnHeader property is not working.
+                  backgroundColor: Colors.black,
+                  canTapOnHeader: true,
+                  value: item.categoryName,
+                  headerBuilder: (context, isExpanded) {
+                    return GestureDetector(
+                      child: ListTile(
+                        title: Text(item.categoryName),
+                      ),
                     );
-                  }).toList(),
-                ),  
-              )
-            ],
-          );
-        } ).toList()
-      ),
+                  },
+                  body: Column(
+                    children: item.subMenuItems.map((subMenuItem) {
+                      return ListTile(
+                        onTap: () {
+                          tile.updateSubMenuItem(subMenuItem['name']);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Log()));
+                          // print(tile.subMenuItemName);
+                        },
+                        title: Text(subMenuItem['name']),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }).toList()),
+        )
+      ]),
     );
   }
 
@@ -93,8 +98,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
   //   }
   //   super.initState();
   // }
-
-  
 
   // @override
   // Widget build(BuildContext context) {
@@ -113,14 +116,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
   //   if (list.subMenu.isEmpty) {
   //     return ListTile(
   //       onTap: () {
-  //         tile.updateString(list.name);
+  //         tile.updateSubMenuItem(list.subMenuItemName);
   //         Navigator.push(
   //             context, MaterialPageRoute(builder: (context) => const Log()));
-  //         print(tile.title);
+  //         print(tile.subMenuItemName);
   //       },
   //       title: Text(
   //         list.name,
-  //         style: const TextStyle(color: Colors.white), 
+  //         style: const TextStyle(color: Colors.white),
   //       ),
   //       leading: Icon(
   //         list.icon,
@@ -130,16 +133,15 @@ class _CustomDropdownState extends State<CustomDropdown> {
   //   }
   //   return
   //   ExpansionTile(
-  //     onExpansionChanged: (value) {
-  //       tile.updateTemp(list.name);
-  //       print(tile.temp);
-  //     },
+  //      onExpansionChanged: (value) {
+  //      tile.updateExerciseName(list.name);
+  //      print(tile.exerciseName);
+  //    },
   //     title: Text(
   //       list.name,
   //       style: const TextStyle(color: Colors.white),
   //     ),
   //     children: list.subMenu.map(_buildlist).toList(),
-  //     // children: list.subMenu.map((e) => _buildlist(e,)).toList(),
   //   );
   // }
 }

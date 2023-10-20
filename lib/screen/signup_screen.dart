@@ -16,8 +16,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //text editing controllers
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passswordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -95,32 +94,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 15,
                 ),
                 // username textfield
-                MyTextField(
-                  controller: emailController,
-                  hintText: 'Username',
-                  obscureText: false,
-                  textInputType: TextInputType.emailAddress,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: MyTextField(
+                    controller: emailController,
+                    hintText: 'User Email',
+                    obscureText: false,
+                    textInputType: TextInputType.emailAddress,
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 // passsword field
-                MyTextField(
-                  controller: passswordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                  textInputType: TextInputType.text,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: MyTextField(
+                    controller: passswordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                    textInputType: TextInputType.text,
+                  ),
                 ),
 
                 const SizedBox(
                   height: 15,
                 ),
                 //confirm passsword field
-                MyTextField(
-                  controller: confirmPasswordController,
-                  hintText: 'ConfirmPassword',
-                  obscureText: true,
-                  textInputType: TextInputType.text,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: MyTextField(
+                    controller: confirmPasswordController,
+                    hintText: 'ConfirmPassword',
+                    obscureText: true,
+                    textInputType: TextInputType.text,
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -169,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
-                          'Or continue with',
+                          'Or Continue With',
                           style: TextStyle(color: Colors.grey.shade700),
                         ),
                       ),

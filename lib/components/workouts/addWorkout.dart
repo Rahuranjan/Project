@@ -1,8 +1,8 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/workouts/provider_workoutdays.dart';
+import 'package:project/widgets/my_textfield.dart';
 import 'package:provider/provider.dart';
 
 class AddWorkout extends StatefulWidget {
@@ -36,7 +36,7 @@ class _AddWorkoutState extends State<AddWorkout> {
   @override
   Widget build(BuildContext context) {
     return Consumer<WorkoutDaysProvider>(
-      builder: (context, value, child) =>  Scaffold(
+      builder: (context, value, child) => Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
           centerTitle: true,
@@ -82,35 +82,27 @@ class _AddWorkoutState extends State<AddWorkout> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                keyboardType: TextInputType.text,
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  hintText: "Workout Name",
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  fillColor: Color.fromRGBO(189, 189, 189, 1),
-                  filled: true,
-                ),
-                cursorColor: Colors.grey,
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: MyTextField(
+                    controller: _nameController,
+                    hintText: "Workout Name ",
+                    obscureText: false,
+                    textInputType: TextInputType.text),
               ),
               const SizedBox(
                 height: 15,
               ),
-              TextField(
-                keyboardType: TextInputType.text,
-                controller: _descriptionController,
-                obscureText: false,
-                decoration: InputDecoration(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: MyTextField(
+                    controller: _descriptionController,
                     hintText: "Description (Optional)",
-                    fillColor: Colors.grey.shade400,
-                    filled: true,
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black))),
+                    obscureText: false,
+                    textInputType: TextInputType.text),
               ),
               const SizedBox(
                 height: 20,
@@ -132,29 +124,29 @@ class _AddWorkoutState extends State<AddWorkout> {
                       itemCount: workoutDays.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                            onTap: () {
-                              if (value.selectedDays
-                                  .contains(workoutDays[index].toString())) {
-                                // value.removeDays(index.toString());
-                                value.removeDays(workoutDays[index].toString());
-                              } else {
-                                // value.addDays(index.toString());
-                                value.addDays(workoutDays[index].toString());
-                              }
-                              print(value.selectedDays);
-                            },
-                            title: Text(
-                              workoutDays[index],
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                            trailing: Icon(
-                              value.selectedDays
-                                      .contains(workoutDays[index].toString())
-                                  ? Icons.check
-                                  : null,
-                              color: Colors.yellow,
-                            ),
-                          );
+                          onTap: () {
+                            if (value.selectedDays
+                                .contains(workoutDays[index].toString())) {
+                              // value.removeDays(index.toString());
+                              value.removeDays(workoutDays[index].toString());
+                            } else {
+                              // value.addDays(index.toString());
+                              value.addDays(workoutDays[index].toString());
+                            }
+                            // print(value.selectedDays);
+                          },
+                          title: Text(
+                            workoutDays[index],
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          trailing: Icon(
+                            value.selectedDays
+                                    .contains(workoutDays[index].toString())
+                                ? Icons.check
+                                : null,
+                            color: Colors.yellow,
+                          ),
+                        );
                       })),
             ],
           ),

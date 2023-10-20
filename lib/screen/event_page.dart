@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:project/screen/exercises.dart';
 import 'package:project/screen/workouts.dart';
 
@@ -12,10 +13,7 @@ class EventPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: const Text(
-          'date',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Text(DateFormat.yMMMMd().format(date).toString()),
         leading: Row(
           children: [
             IconButton(
@@ -30,41 +28,77 @@ class EventPage extends StatelessWidget {
           IconButton(
               onPressed: () {
                 showModalBottomSheet(
-                  context: context, 
-                  builder: (BuildContext context){
-                    return SizedBox(
-                      height: 200,
-                      child: ListView(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(10),
+                  backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        height: 200,
+                        child: ListView(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ExerciseScreen()));
+                                      },
+                                      child: const Text(
+                                        "Choose Exercise",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 18),
+                                      )),
+                                  const Divider(
+                                    color: Colors.black,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Workouts()));
+                                      },
+                                      child: const Text(
+                                        "Choose Workout",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 18),
+                                      )),
+                                ],
+                              ),
                             ),
-                            child: Column(
-                              children: [
-                                TextButton(onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ExerciseScreen()));
-                                }, child: const Text("Choose Exercise", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),)),
-                                const Divider(thickness: 1, color: Colors.black ,),
-                                TextButton(onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Workouts()));
-                                }, child: const Text("Choose Workout", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),)),
-                              ],
+                            const SizedBox(
+                              height: 20,
                             ),
-                          ),
-                          const SizedBox( height: 20,),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    "Cancel",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 18),
+                                  )),
                             ),
-                            child: TextButton(onPressed: (){Navigator.of(context).pop();}, child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),)),
-                          ),
-                        ],
-                      ),
-                    );
-                  });
+                          ],
+                        ),
+                      );
+                    });
               },
               icon: const Icon(
                 Icons.add,

@@ -96,10 +96,12 @@ class _WorkoutsState extends State<Workouts> {
                                       IconButton(
                                           onPressed: () {
                                             showModalBottomSheet(
+                                              backgroundColor: Colors.transparent,
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
-                                                  return SizedBox(
+                                                  return Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 8),
                                                     height: 270,
                                                     child: ListView(
                                                       children: [
@@ -110,7 +112,7 @@ class _WorkoutsState extends State<Workouts> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        10),
+                                                                        15),
                                                           ),
                                                           child: Column(
                                                             children: [
@@ -134,7 +136,6 @@ class _WorkoutsState extends State<Workouts> {
                                                                             18),
                                                                   )),
                                                               const Divider(
-                                                                thickness: 1,
                                                                 color: Colors
                                                                     .black,
                                                               ),
@@ -152,7 +153,6 @@ class _WorkoutsState extends State<Workouts> {
                                                                             18),
                                                                   )),
                                                               const Divider(
-                                                                thickness: 1,
                                                                 color: Colors
                                                                     .black,
                                                               ),
@@ -198,10 +198,12 @@ class _WorkoutsState extends State<Workouts> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          10)),
+                                                                          15)),
                                                           child: TextButton(
                                                               onPressed: () {
-                                                                Navigator.of(context).pop();
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
                                                               },
                                                               child: const Text(
                                                                 "Cancel",
@@ -245,9 +247,9 @@ class _WorkoutsState extends State<Workouts> {
                                                 itemCount:
                                                     snapshot.data!.docs.length,
                                                 itemBuilder: (context, index) =>
-                                                     Text(
-                                                      // "text, ",
+                                                    Text(
                                                       "${snapshot.data!.docs[index]['Workout Days']}, ",
+                                                      // needed to only first three leter of weekday -- not done yet
                                                       style: const TextStyle(
                                                           color: Colors.white),
                                                     )),

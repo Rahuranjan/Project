@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class PrimaryMuscleProvider extends ChangeNotifier {
-  String? title;
-  String? temp;
+  String? subMenuItemName;
+  String? exerciseName;
 
-  void updateString(String stringdata) {
-    title = stringdata;
+  void updateSubMenuItem(String stringdata) {
+    subMenuItemName = stringdata;
     notifyListeners();
   }
-  void updateTemp(String data){
-    temp = data;
+  void updateExerciseName(String data){
+    exerciseName = data;
     notifyListeners(); 
   } 
 }

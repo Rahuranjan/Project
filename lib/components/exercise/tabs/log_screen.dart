@@ -187,9 +187,9 @@ class _LogScreenState extends State<LogScreen> {
                       FirebaseFirestore.instance
                           .collection("exercises")
                           .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .collection(tile.temp.toString())
+                          .collection(tile.exerciseName.toString())
                           .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .collection(tile.title.toString())
+                          .collection(tile.subMenuItemName.toString())
                           .add(data);
                       // FirebaseFirestore.instance
                       //     .collection("exercises")
@@ -197,7 +197,7 @@ class _LogScreenState extends State<LogScreen> {
                       //     .collection(tile.temp.toString())
                       //     .doc("sub_exercise_id")
                       //     .collection(tile.title.toString())
-                      //     .add(data);
+                      //     .add(data);   
                       setState(() {
                         sets.add(Set(
                             reps: _count,
@@ -239,9 +239,9 @@ class _LogScreenState extends State<LogScreen> {
                         stream: FirebaseFirestore.instance
                             .collection("exercises")
                             .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .collection(tile.temp.toString())
+                            .collection(tile.exerciseName.toString())
                             .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .collection(tile.title.toString()) 
+                            .collection(tile.subMenuItemName.toString()) 
                             .snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -268,7 +268,7 @@ class _LogScreenState extends State<LogScreen> {
                             );
                           }
                           if (snapshot.hasData) {
-                            return Container(
+                            return SizedBox(
                               height: 200,
                               width: 220,
                               child: ListView.builder(

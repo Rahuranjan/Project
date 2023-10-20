@@ -71,7 +71,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                         const SizedBox(
                           width: 3,
                         ),
-                        Text(
+                        Text( 
                           "Search",
                           style: TextStyle(
                               color: Colors.grey.shade600,

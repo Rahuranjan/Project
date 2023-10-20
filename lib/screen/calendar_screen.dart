@@ -43,24 +43,38 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         leading: const Icon(
           Icons.settings,
-          color: Colors.yellow,
+          color: Colors.yellow, 
         ),
       ),
       body: Container(
         color: Colors.black, 
-        child: TableCalendar(
-         headerStyle: const HeaderStyle(
-           formatButtonVisible: false, titleCentered: true
-         ),
-         locale: 'en_US',
-         firstDay: DateTime.utc(2010, 10, 16),
-         lastDay: DateTime.utc(2030, 3, 14),
-         focusedDay: DateTime.now(),
-         calendarStyle: const CalendarStyle(
-             todayDecoration: BoxDecoration(
-                 color: Colors.yellow, shape: BoxShape.circle)),
-         onDaySelected: selectedDay,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              const Divider(color: Colors.grey),
+              TableCalendar(
+               headerStyle: const HeaderStyle(
+                 formatButtonVisible: false, titleCentered: true
+               ),
+               locale: 'en_US',
+               firstDay: DateTime.utc(2010, 10, 16),
+               lastDay: DateTime.utc(2030, 3, 14),
+               focusedDay: DateTime.now(),
+               calendarStyle: const CalendarStyle(
+                weekendTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                defaultTextStyle: TextStyle( fontWeight: FontWeight.bold),
+                selectedTextStyle: TextStyle(color: Colors.black),
+                todayTextStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                   todayDecoration: BoxDecoration(
+                       color: Colors.yellow, shape: BoxShape.circle)),
+               onDaySelected: selectedDay,
+               
+                ),
+              const Divider(color: Colors.grey)
+            ],
           ),
+        ),
       ),
     );
   }

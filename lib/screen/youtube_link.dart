@@ -15,7 +15,6 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
 
   final videoURL = "https://www.youtube.com/watch?v=YMx8Bbev6T4";
 
- 
   @override
   void initState() {
     super.initState();
@@ -46,19 +45,13 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          title: const Text(
-            "Youtube link",
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        body: _videoController.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _videoController.value.aspectRatio,
-                child: Chewie(controller: _chewieController),
-              )
-            : Container());
+        body: Container(
+          child: _videoController.value.isInitialized
+              ? AspectRatio(
+                  aspectRatio: _videoController.value.aspectRatio,
+                  child: Chewie(controller: _chewieController),
+                )
+              : Container(),
+        ));
   }
 }

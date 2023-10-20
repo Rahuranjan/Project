@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:project/screen/youtube_link.dart';
 
 class Info extends StatelessWidget {
   const Info({super.key});
@@ -55,7 +56,8 @@ class Info extends StatelessWidget {
                     color: Colors.yellow,
                   )
                 ],
-              ))
+              )),
+          Expanded(child: const YoutubeScreen()),
         ],
       ),
     );

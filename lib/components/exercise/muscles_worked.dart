@@ -39,6 +39,7 @@ class _MusclesWorkedState extends State<MusclesWorked> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.grey.shade900,
         centerTitle: true,
         title: const Text(
@@ -47,7 +48,9 @@ class _MusclesWorkedState extends State<MusclesWorked> {
         ),
         actions: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: const Text(
                 "Done",
                 style: TextStyle(

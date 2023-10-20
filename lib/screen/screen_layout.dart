@@ -30,7 +30,6 @@ class _ScreenLayoutState extends State<ScreenLayout> {
   
 
   void changePage(int page) {
-    // pageController.jumpToPage(page);
     setState(() {
       currentPage = page;
     });
@@ -49,7 +48,7 @@ class _ScreenLayoutState extends State<ScreenLayout> {
           elevation: 10,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          selectedItemColor: Colors.yellowAccent,
+          selectedItemColor: Colors.yellowAccent, 
           // unselectedItemColor: const Color(0xFF526480),
           unselectedItemColor: Colors.grey.shade500,
           type: BottomNavigationBarType.fixed,

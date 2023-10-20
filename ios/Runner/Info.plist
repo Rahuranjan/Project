@@ -10,7 +10,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
-			<array>
+			<array> 
 				<!-- TODO Replace this value: -->
 				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 				<string>com.googleusercontent.apps.548346443732-7p4ceesl50rl3p7gk9m205ohoasqqvne</string>

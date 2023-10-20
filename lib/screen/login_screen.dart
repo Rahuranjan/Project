@@ -4,6 +4,8 @@ import 'package:project/screen/screen_layout.dart';
 import 'package:project/widgets/my_textfield.dart';
 import 'package:project/screen/signup_screen.dart';
 
+import 'login_with_phone.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -22,20 +24,7 @@ class _LoginPageState extends State<LoginPage> {
       _isLoading = true;
     });
 
-    // try sign in
-    // try {
-    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //       email: emailController.text,
-    //       password: passswordController.text);
 
-    //   // pop the loading circle
-    //   Navigator.pop(context);
-    // } on FirebaseAuthException catch (e) {
-    //   //pop the loading circle
-    //   Navigator.pop(context);
-    //   //show error message
-    //   showErrorMessage(e.code);
-    // }
     String res = await AuthMethods().loginUser(
         email: emailController.text, password: passswordController.text);
 
@@ -98,24 +87,32 @@ class _LoginPageState extends State<LoginPage> {
                   height: 25,
                 ),
                 // username textfield
-                MyTextField(
-                  controller: emailController,
-                  hintText: 'Username',
-                  obscureText: false,
-                  textInputType: TextInputType.emailAddress,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: MyTextField(
+                    controller: emailController,
+                    hintText: 'User Email',
+                    obscureText: false,
+                    textInputType: TextInputType.emailAddress,
+                  ),
                 ),
-
                 const SizedBox(
                   height: 10,
                 ),
                 // passsword field
-                MyTextField(
-                  controller: passswordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                  textInputType: TextInputType.text,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: MyTextField(
+                    controller: passswordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                    textInputType: TextInputType.text,
+                  ),
                 ),
                 //forgot password
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
@@ -195,32 +192,43 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // google button
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.grey.shade300,
-                      ),
-                      child: Image.asset(
-                        'lib/images/google.png',
-                        height: 40,
+                    GestureDetector(
+                      onTap: () => AuthMethods().signInWithGoogle(),
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(16),
+                          color: Colors.grey.shade300,
+                        ),
+                        child: Image.asset(
+                          'lib/images/google.png',
+                          height: 40,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     // phone button
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.grey.shade300,
-                      ),
-                      child: Image.asset(
-                        'lib/images/phone.png',
-                        height: 40,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginWithPhone()));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(16),
+                          color: Colors.grey.shade300,
+                        ),
+                        child: Image.asset(
+                          'lib/images/phone.png',
+                          height: 40,
+                        ),
                       ),
                     ),
                   ],

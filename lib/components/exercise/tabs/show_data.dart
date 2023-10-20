@@ -29,58 +29,59 @@ class _ShowDataState extends State<ShowData> {
   }
 
   Future<void> _loadData() async {
-    final categories = await FirebaseFirestore.instance.collection("Admin_exercises").get();
-    final items = await Future.wait(categories.docs.map<Future<Item>>((category) async {
+    final categories =
+        await FirebaseFirestore.instance.collection("Admin_exercises").get();
+    final items =
+        await Future.wait(categories.docs.map<Future<Item>>((category) async {
       final subMenuCollection = category.reference.collection("subMenu");
       final subMenuItems = (await subMenuCollection.get()).docs.toList();
       return Item(
-        category['name'], 
+        category['name'],
         subMenuItems,
-        );
+      );
     }).toList());
-    
+
     setState(() {
       _data = items;
     });
-    
   }
-  
-  
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Expanded(
-      child: ListView(
-        children: [ 
-          ExpansionPanelList.radio(
-            children: _data.map<ExpansionPanelRadio>((Item item) {
-              return ExpansionPanelRadio(
-                backgroundColor: Colors.black,
-                canTapOnHeader: true,
-                value: item.categoryName, 
-                headerBuilder: (context, isExpanded){
-                  return ListTile(
-                    title: Text(item.categoryName),
-                  );
-                }, 
-                body: Column(
-                  children: item.subMenuItems.map((subMenuItem) {
+      child: ListView(children: [
+        Container(
+          padding: EdgeInsets.zero,
+          margin: EdgeInsets.zero,
+          child: ExpansionPanelList.radio(
+              elevation: 0,
+              expandedHeaderPadding: EdgeInsets.zero,
+              children: _data.map<ExpansionPanelRadio>((Item item) {
+                return ExpansionPanelRadio(
+                  backgroundColor: Colors.black,
+                  canTapOnHeader: true,
+                  value: item.categoryName,
+                  headerBuilder: (context, isExpanded) {
                     return ListTile(
-                      title: Text(subMenuItem['name']),
+                      // contentPadding:const EdgeInsets.all(0),
+                      title: Text(item.categoryName),
                     );
-                  }).toList(),
-                ),  
-              );
-            }).toList()
-          )
-        ]
-        // } ).toList()
-      ),
-      
+                  },
+                  body: Column(
+                    children: item.subMenuItems.map((subMenuItem) {
+                      return ListTile(
+                        // contentPadding: EdgeInsets.zero,
+                        title: Text(subMenuItem['name']),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }).toList()),
+        )
+      ]),
     );
   }
-  
-  
-  
+
   // @override
   // Widget build(BuildContext context) {
   //   // final selected = Provider.of<SelectMusclesProvider>(context);
@@ -110,12 +111,13 @@ class _ShowDataState extends State<ShowData> {
   //         if (snapshot.data!.docs.isEmpty) {
   //           return const Text("No Data found");
   //         }
-
-  
 }
 
 class Item {
-  Item(this.categoryName, this.subMenuItems);
+  Item(
+    this.categoryName,
+    this.subMenuItems,
+  );
   final String categoryName;
   final List<DocumentSnapshot> subMenuItems;
   bool isExpanded = false;
